@@ -53,7 +53,7 @@ void LCD_print_S(String text, int col, int row, int cl = 0){
 
 }
 
-void LCD_print_C(char ch, int col, int row, int cl = 0){
+void LCD_pr(char ch, int col, int row, int cl = 0){
 
   if(cl == 1) lcd.clear();
 
