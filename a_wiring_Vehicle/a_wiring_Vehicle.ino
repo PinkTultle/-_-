@@ -14,8 +14,8 @@ char keys[ROWS][COLS] = {
   {'*','0','#','D'}
 };
 
-byte rowPins[ROWS] = {9, 10, 11, 12};   // R1, R2, R3, R4 단자가 연결된 아두이노 핀 번호
-byte colPins[COLS] = {8, 7, 6, 5};   // C1, C2, C3, C4 단자가 연결된 아두이노 핀 번호
+byte rowPins[ROWS] = {52, 50, 48, 46};   // R1, R2, R3, R4 단자가 연결된 아두이노 핀 번호
+byte colPins[COLS] = {53, 51, 49, 47};   // C1, C2, C3, C4 단자가 연결된 아두이노 핀 번호
 
 Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
 
@@ -52,7 +52,7 @@ String cmd, func_cmd;
 int cmd_len, func_num;
 unsigned long wake_t;
 bool Keypad_Enable = false, Wake_status = false; 
-char keyPressed, buff[4] = "";
+char keyPressed, buf[4];
 
 void setup() {
 
@@ -61,6 +61,10 @@ void setup() {
   pinMode(Led1, OUTPUT);
   pinMode(Led2, OUTPUT);
   Serial.begin(9600);
+  Serial1.begin(9600);
+  Serial2.begin(9600);
+
+
   lcd.begin();
   lcd.backlight();
   lcd.createChar(0, ho);
