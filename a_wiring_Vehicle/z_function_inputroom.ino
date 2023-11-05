@@ -3,9 +3,8 @@
 //키패드의 종료 버튼을 누르거나,
 //병실 번호를 입력받기 전에 종료되지 않는다.
 
-void room_input(){
+int room_input(){
 
-  
   lcd.clear();
   int index = 0;
   int room_num;
@@ -36,30 +35,28 @@ void room_input(){
           LCD_print_S("ERROR!!", 4, 1);
           continue;
         }
-        Serial.print("룸 번호 입력 : ");
-        Serial.println(room_num);
 
         LCD_print_S("OKEY!!", 5, 1);
 
-        return  NULL;
+        return room_num;
       }
 
       //종료 버튼
       if(input == 'D'){
-          //종료시 동작 생각해서 삽입예정
-
-        break;
+        //종료시 동작 생각해서 삽입예정
+        reset_input();
+        lcd.clear();
+        return -1;
       }
 
       if(index == 0){
         reset_input();
       }
       
+      //키패드 입력 버퍼에 저장
       buf[index] = input;
-      Serial.print("키패드 입력 : ");
-      Serial.println(buf[index]);
       
-
+      //키패드 입력 LCD 출력
       switch(index){
         case 0:
           LCD_pr(buf[index], 4, 0);
@@ -75,9 +72,6 @@ void room_input(){
       }
 
       index = (index == 2)? 0 : index+1;
-
-      
-
     }  
   }
 }

@@ -49,7 +49,8 @@ public:
   void set_Space(String c, unsigned long Lt, unsigned long Rt);
 
   //식사 시간 반환
-  unsigned long mealtime();
+  unsigned long mealtime(int maod);
+  void init_space();
 
   void show();
 };

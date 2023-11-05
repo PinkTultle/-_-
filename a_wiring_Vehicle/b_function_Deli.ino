@@ -13,12 +13,6 @@
 
 int Delivery(String deli_cmd, int len){
 
-  ///////////////////////////////////////////////
-  Serial.println("배달 함수 정상 호출");
-  Serial.println(deli_cmd + " <----------배달 함수 내 전송받은 문자열");
-  ///////////////////////////////////////////////
-
-
   int num, Sp_num, P_num, T_num;
   unsigned long Lt = millis(), Rt;
   String code, code_str;
@@ -33,36 +27,24 @@ int Delivery(String deli_cmd, int len){
   code = deli_cmd.substring(Sp_num + 1, P_num);
   Rt = deli_cmd.substring(P_num + 1, T_num).toInt();
 
-  //////////////////////////////////////////////
-  Serial.print(Rt);
-  Serial.println(" <---- 리얼 타임");
-  Serial.println(code + " <---- 환자 코드");
-  //////////////////////////////////////////////
-
   //환자 1 배달
   if (P1.get_Code().equals(code)) {
-    ///////////////////////////////////////////////
-    Serial.println("배달 1번 호출");
-    ///////////////////////////////////////////////
 
     //압력센서 동작 및 LED ON / 기다리는 함수 호출
     digitalWrite(Led1, HIGH);
-    feeding_Stand(P1, 1);
+    feeding_Stand(P1);
 
   }
 
   //적재 공간 2 세팅
   else if (P2.get_Code().equals(code)) {
-    ///////////////////////////////////////////////
-    Serial.println("배달 2번 호출");
-    ///////////////////////////////////////////////
-
+    
     //압력센서 동작 및 LED ON / 기다리는 함수 호출
     digitalWrite(Led2, HIGH);
-    feeding_Stand(P2, 2);
+    feeding_Stand(P2);
 
   } else {
-    Serial.print("배달 데이터 이상!!");
+    digitalWrite(err_Led, HIGH);
   }
 
   digitalWrite(Led1, LOW);
@@ -70,24 +52,25 @@ int Delivery(String deli_cmd, int len){
 }
 
 
-int feeding_Stand(space p, int fsr){
+int feeding_Stand(space p){
   
-  Serial.println("압력센서 호출 정상");
   unsigned long Now = millis(), Wait = 0, check = 0;
   int var, sensor;
 
-  if(fsr == 1) sensor = FSRsensor1;
-  if(fsr == 2) sensor = FSRsensor2;
+  if(p.get_Room() == 1) sensor = FSRsensor1;
+  if(p.get_Room() == 2) sensor = FSRsensor2;
   
   while(1){
     
     var = analogRead(sensor);     // 센서값을 아나로그로 읽어 value 변수에 저장
-    Serial.println(var);
     Wait = millis() - Now;
 
     //받지 않고 대기 시간이 지났을경우
-    if(var > 400 && Wait > 300000){
+    //현재 설정된 대기 시간 : 3분
+    if(var > 400 && Wait > Wait_ms){
       p.set_Status(true);
+
+      Moniter.print("delivery:"+String(p.get_Room())+":"+p.get_Code()+":NO");
 
       return -1;
     } //식판을 받았을 때
@@ -99,12 +82,10 @@ int feeding_Stand(space p, int fsr){
       
       //식판을 꺼내고 3초간 유지해야 식판을 꺼낸것으로 인식
       if( (millis() - check) > 3000) {
-        Serial.print(millis());
-        Serial.print(" : ");
-        Serial.println(/*millis() - */check);
-        
-        Serial.println("성공!");
         p.set_St(millis());
+
+        Moniter.print("delivery:"+String(p.get_Room())+":"+String(p.get_Code())+":"+String(p.mealtime(1)));
+        
         return 1;
       }
     }
