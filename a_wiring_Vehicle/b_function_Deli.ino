@@ -70,7 +70,7 @@ int feeding_Stand(space p){
     if(var > 400 && Wait > Wait_ms){
       p.set_Status(true);
 
-      Moniter.print("delivery:"+String(p.get_Room())+":"+p.get_Code()+":NO");
+      Moniter.print("delivery:"+String(p.get_Room())+":"+p.get_Code()+":NO\n");
 
       return -1;
     } //식판을 받았을 때
@@ -84,7 +84,7 @@ int feeding_Stand(space p){
       if( (millis() - check) > 3000) {
         p.set_St(millis());
 
-        Moniter.print("delivery:"+String(p.get_Room())+":"+String(p.get_Code())+":"+String(p.mealtime(1)));
+        Moniter.print("delivery:"+String(p.get_Room())+":"+String(p.get_Code())+":"+String(p.mealtime(1))+"\n");
         
         return 1;
       }

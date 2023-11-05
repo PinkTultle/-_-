@@ -113,7 +113,7 @@ void loop() {
         
         //시리얼1으로 호실 적재 정보 요청
         //리시브 받은 정보를 내부 변수에 저장
-        send = send + "Roomnumber" + ":" + String(room);
+        send = send + "Roomnumber" + ":" + String(room)+"\n";
         Moniter.print(send);
       }
       else if (room == -1){
@@ -152,6 +152,9 @@ void loop() {
         Stand();
       }else if (func_cmd == "sleep"){
         Sleep();
+      }
+      else {
+        digitalWrite(err_Led, HIGH);
       }
     }
   }

@@ -25,7 +25,7 @@ int Stand() {
     
         P1.set_Et(millis());
 
-        Moniter.print("stand:"+String(P1.get_Room())+":"+P1.get_Code()+":"+String(P1.mealtime(2)));
+        Moniter.print("stand:"+String(P1.get_Room())+":"+P1.get_Code()+":"+String(P1.mealtime(2))+"\n");
         ck1 = true;
       }
     } else if (ck1 == false) {
@@ -43,7 +43,7 @@ int Stand() {
         //3초이상 식판이 압력센서에 감지 된 상황
         P2.set_Et(millis());
 
-        Moniter.print("stand:"+String(P1.get_Room())+":"+P1.get_Code()+":"+String(P1.mealtime(2)));
+        Moniter.print("stand:"+String(P1.get_Room())+":"+P1.get_Code()+":"+String(P1.mealtime(2))+"\n");
         ck2 = true;
       }
     } else if (ck2 == false) {
