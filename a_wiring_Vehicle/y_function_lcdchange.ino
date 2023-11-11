@@ -44,6 +44,17 @@ void LCD_print(String text, int cut){
   }
 }
 
+/*
+  함수 설명
+  LCD에 매개변수로 전달할 (문자/문자열)를/을 출력하는 함수
+  
+  파라매터 설명
+  text : LCD에 출력할 문자/문자열
+  int col : 해당 줄의 col번째 칸
+  int row : 0 >> 첫 줄 | 1 >> 두번째 줄
+  int lc : lcd.clear() 함수 호출 여부 / 기본 0으로 설정
+*/
+
 void LCD_print_S(String text, int col, int row, int cl = 0){
   
   if(cl == 1) lcd.clear();

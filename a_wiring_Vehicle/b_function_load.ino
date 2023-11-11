@@ -31,9 +31,10 @@ void Load(String load_cmd, int len) {
 
   //적재 공간 1 세팅
   if (num == 1) {
-
     P1.set_Space(code, Lt, Rt);
     P1.set_Status(true);
+
+    
   }
 
   //적재 공간 2 세팅

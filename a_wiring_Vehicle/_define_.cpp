@@ -2,7 +2,7 @@
 
 //생성자
 space::space() {
-  space(-1);
+  space(0);
 }
 
 space::space(int r) {

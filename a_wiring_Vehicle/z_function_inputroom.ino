@@ -18,6 +18,9 @@ int room_input(){
     if(input)  
     {  
 
+      //입력시 두번째 줄의 문구 삭제
+      LCD_print_S("               ", 0, 1);
+
       //지우기 버튼 : 버퍼 비우고 인덱스 및 LCD 초기화
       if(input == 'B'){
         reset_input();
@@ -30,7 +33,7 @@ int room_input(){
         //버퍼 값을 코드로 만드는 함수 
         Enter(&room_num);
 
-        if(room_num < 0){
+        if(Check(room_num)){
           reset_input();
           LCD_print_S("ERROR!!", 4, 1);
           continue;
@@ -46,6 +49,7 @@ int room_input(){
         //종료시 동작 생각해서 삽입예정
         reset_input();
         lcd.clear();
+        
         return -1;
       }
 
@@ -111,4 +115,13 @@ void Enter(int *room_num){
     *room_num = (i < 2) ? *room_num*10 : *room_num; 
   }
 
+}
+
+int Check(const int room_num){
+
+  int size = sizeof(settingRoom)/sizeof(settingRoom[0]);
+  for(int i=0; i < size; i++){
+    if(settingRoom[i] == room_num) return 0;
+  }
+  return 1;
 }

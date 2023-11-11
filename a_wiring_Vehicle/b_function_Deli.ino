@@ -34,6 +34,16 @@ int Delivery(String deli_cmd, int len){
     digitalWrite(Led1, HIGH);
     feeding_Stand(P1);
 
+    //다음 동작을 하란 신호
+    ras_ros.print("OK");
+    /*
+    if(P1.get_Status() == true){
+      ras_ros.print("YES");
+
+    } else {
+      ras_ros.print("NO");
+    }*/
+
   }
 
   //적재 공간 2 세팅
@@ -42,6 +52,17 @@ int Delivery(String deli_cmd, int len){
     //압력센서 동작 및 LED ON / 기다리는 함수 호출
     digitalWrite(Led2, HIGH);
     feeding_Stand(P2);
+
+    //다음 동작을 하란 신호
+    ras_ros.print("OK");
+
+    /*
+    if(P2.get_Status() == true){
+
+    }else{
+
+    }*/
+
 
   } else {
     digitalWrite(err_Led, HIGH);
@@ -52,7 +73,11 @@ int Delivery(String deli_cmd, int len){
 }
 
 
-int feeding_Stand(space p){
+
+//해당 칸의 압력 측정 함수 
+//환자가 식판을 받으면 1, 이니면 0 반환
+//이를 통해 환자
+void feeding_Stand(space p){
   
   unsigned long Now = millis(), Wait = 0, check = 0;
   int var, sensor;
@@ -72,7 +97,7 @@ int feeding_Stand(space p){
 
       Moniter.print("delivery:"+String(p.get_Room())+":"+p.get_Code()+":NO\n");
 
-      return -1;
+      break;
     } //식판을 받았을 때
     else if(var < 400){
       if(p.get_Status() == true){
@@ -86,7 +111,7 @@ int feeding_Stand(space p){
 
         Moniter.print("delivery:"+String(p.get_Room())+":"+String(p.get_Code())+":"+String(p.mealtime(1))+"\n");
         
-        return 1;
+        break;
       }
     }
   }
