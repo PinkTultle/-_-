@@ -126,13 +126,14 @@ void loop() {
         millis_reset();
         Sleep();
       }
+      
     }
 
     //시리얼 입력을 통해 WakeUp
     //이 경우 input_Room 시퀴스를 건너뛰고 바로 동작 상태로 전환
     if(ras_ros.available()){
-      char n = ras_ros.read();
-      if(n == '%'){
+      String n = ras_ros.readString();
+      if(n == "%"){
         lcd.backlight();
         reset_serialbuff();
         lcd.clear();
