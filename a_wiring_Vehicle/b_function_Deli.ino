@@ -14,7 +14,6 @@
 int Delivery(String deli_cmd, int len){
 
   int num, Sp_num, P_num, T_num;
-  unsigned long Lt = millis(), Rt;
   String code, code_str;
 
 
@@ -31,7 +30,7 @@ int Delivery(String deli_cmd, int len){
 
     //압력센서 동작 및 LED ON / 기다리는 함수 호출
     digitalWrite(Led1, HIGH);
-    feeding_Stand(P1);
+    feeding_Stand(&P1);
 
     //다음 동작을 하란 신호
     ras_ros.print("OK");
@@ -43,7 +42,7 @@ int Delivery(String deli_cmd, int len){
     
     //압력센서 동작 및 LED ON / 기다리는 함수 호출
     digitalWrite(Led2, HIGH);
-    feeding_Stand(P2);
+    feeding_Stand(&P2);
 
     //다음 동작을 하란 신호
     ras_ros.print("OK");
@@ -62,13 +61,13 @@ int Delivery(String deli_cmd, int len){
 //해당 칸의 압력 측정 함수 
 //환자가 식판을 받으면 1, 이니면 0 반환
 //이를 통해 환자
-void feeding_Stand(space p){
+void feeding_Stand(space *p){
   
   unsigned long Now = millis(), Wait = 0, check = 0;
   int var, sensor;
 
-  if(p.get_Room() == 1) sensor = FSRsensor1;
-  if(p.get_Room() == 2) sensor = FSRsensor2;
+  if((*p).get_Room() == 1) sensor = FSRsensor1;
+  if((*p).get_Room() == 2) sensor = FSRsensor2;
   
   while(1){
     
@@ -78,22 +77,22 @@ void feeding_Stand(space p){
     //받지 않고 대기 시간이 지났을경우
     //현재 설정된 대기 시간 : 3분
     if(var > 400 && Wait > Wait_ms){
-      p.set_Status(true);
+      (*p).set_Status(true);
 
-      Moniter.print("delivery:"+String(p.get_Room())+":"+p.get_Code()+":NO\n");
+      Moniter.print("delivery:"+String((*p).get_Room())+":"+(*p).get_Code()+":NO\n");
 
       break;
     } //식판을 받았을 때
     else if(var < 400){
-      if(p.get_Status() == true){
-        p.set_Status(false);
+      if((*p).get_Status() == true){
+        (*p).set_Status(false);
         check = millis();
       }
       
       //식판을 꺼내고 3초간 유지해야 식판을 꺼낸것으로 인식
       if( (millis() - check) > 3000) {
 
-        Moniter.print("delivery:"+String(p.get_Room())+":"+String(p.get_Code())+":\n");
+        Moniter.print("delivery:"+String((*p).get_Room())+":"+String((*p).get_Code())+":\n");
         
         break;
       }

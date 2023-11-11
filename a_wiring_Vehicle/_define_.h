@@ -24,9 +24,7 @@ private:
 
 public:
 
-  space();
   space(int r);
-  space(String c, int r);
 
   //설정자 / 접근자 정의
   String get_Code();

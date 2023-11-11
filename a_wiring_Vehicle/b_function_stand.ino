@@ -41,7 +41,7 @@ int Stand() {
       if (millis() - R2_time > 3000) {
         //3초이상 식판이 압력센서에 감지 된 상황
 
-        Moniter.print("stand:"+String(P1.get_Room())+":"+P1.get_Code()+":\n");
+        Moniter.print("stand:"+String(P2.get_Room())+":"+P2.get_Code()+":\n");
         ck2 = true;
       }
     } else if (ck2 == false) {

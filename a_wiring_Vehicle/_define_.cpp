@@ -1,20 +1,11 @@
 #include "_define_.h"
 
 //생성자
-space::space() {
-  space(0);
-}
-
 space::space(int r) {
-  space(" ", r);
-}
-
-space::space(String c, int r) {
-  code = c;
-  room = r;
   status = false;
+  this->room = r;
+  code = "";
 }
-
 
 //설정자, 접근자 구현
 String space::get_Code() {
@@ -24,7 +15,7 @@ bool space::get_Status() {
   return status;
 }
 int space::get_Room() {
-  return room;
+  return this->room;
 }
 
 
@@ -35,7 +26,7 @@ void space::set_Status(bool s) {
   status = s;
 }
 void space::set_Room(int r) {
-  room = r;
+  this->room = r;
 }
 
 void space::set_Space(String c, bool sta) {
