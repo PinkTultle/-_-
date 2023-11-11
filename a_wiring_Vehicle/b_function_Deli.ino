@@ -36,14 +36,7 @@ int Delivery(String deli_cmd, int len){
 
     //다음 동작을 하란 신호
     ras_ros.print("OK");
-    /*
-    if(P1.get_Status() == true){
-      ras_ros.print("YES");
-
-    } else {
-      ras_ros.print("NO");
-    }*/
-
+    
   }
 
   //적재 공간 2 세팅
@@ -55,13 +48,6 @@ int Delivery(String deli_cmd, int len){
 
     //다음 동작을 하란 신호
     ras_ros.print("OK");
-
-    /*
-    if(P2.get_Status() == true){
-
-    }else{
-
-    }*/
 
 
   } else {
