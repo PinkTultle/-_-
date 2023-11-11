@@ -117,7 +117,7 @@ void loop() {
         //시리얼1으로 호실 적재 정보 요청
         //리시브 받은 정보를 내부 변수에 저장
         send = send + "Roomnumber" + ":" + String(room)+"\n";
-        Moniter.print(send);
+        web.print(send);
         lcd.clear();
         Wake_status = true;
       }

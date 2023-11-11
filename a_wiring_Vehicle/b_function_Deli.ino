@@ -79,7 +79,7 @@ void feeding_Stand(space *p){
     if(var > 400 && Wait > Wait_ms){
       (*p).set_Status(true);
 
-      Moniter.print("delivery:"+String((*p).get_Room())+":"+(*p).get_Code()+":NO\n");
+      web.print("delivery:"+String((*p).get_Room())+":"+(*p).get_Code()+":NO\n");
 
       break;
     } //식판을 받았을 때
@@ -92,7 +92,7 @@ void feeding_Stand(space *p){
       //식판을 꺼내고 3초간 유지해야 식판을 꺼낸것으로 인식
       if( (millis() - check) > 3000) {
 
-        Moniter.print("delivery:"+String((*p).get_Room())+":"+String((*p).get_Code())+":\n");
+        web.print("delivery:"+String((*p).get_Room())+":"+String((*p).get_Code())+":\n");
         
         break;
       }
