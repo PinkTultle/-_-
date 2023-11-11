@@ -28,3 +28,10 @@ void reset_serialbuff(){
   }
 
 }
+
+//주의 내부 클럭 초기화 함수로 주의해서 사용
+void millis_reset(){
+
+  timer0_millis = 0;
+
+}

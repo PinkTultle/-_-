@@ -14,8 +14,7 @@
 //적재시 리얼 타임 - Rt
 void Load(String load_cmd, int len) {
 
-  int num, Sp_num, P_num, T_num;
-  unsigned long Lt = millis(), Rt;
+  int num, Sp_num, P_num;
   String code, code_str;
 
 
@@ -25,23 +24,19 @@ void Load(String load_cmd, int len) {
 
   //환자 코드 추출
   P_num = load_cmd.indexOf(":", Sp_num + 1);
-  T_num = load_cmd.indexOf(":", P_num + 1);
   code = load_cmd.substring(Sp_num + 1, P_num);
-  Rt = load_cmd.substring(P_num + 1, T_num).toInt();
+
 
   //적재 공간 1 세팅
   if (num == 1) {
-    P1.set_Space(code, Lt, Rt);
-    P1.set_Status(true);
-
+    P1.set_Space(code, true);
     
   }
 
   //적재 공간 2 세팅
   else if (num == 2) {
 
-    P2.set_Space(code, Lt, Rt);
-    P2.set_Status(true);
+    P2.set_Space(code, true);
 
   } else {
       digitalWrite(err_Led, HIGH);

@@ -23,9 +23,8 @@ int Stand() {
       if (millis() - R1_time > 3000) {
         //3초이상 식판이 압력센서에 감지 된 상황
     
-        P1.set_Et(millis());
 
-        Moniter.print("stand:"+String(P1.get_Room())+":"+P1.get_Code()+":"+String(P1.mealtime(2))+"\n");
+        Moniter.print("stand:"+String(P1.get_Room())+":"+P1.get_Code()+":\n");
         ck1 = true;
       }
     } else if (ck1 == false) {
@@ -41,22 +40,13 @@ int Stand() {
 
       if (millis() - R2_time > 3000) {
         //3초이상 식판이 압력센서에 감지 된 상황
-        P2.set_Et(millis());
 
-        Moniter.print("stand:"+String(P1.get_Room())+":"+P1.get_Code()+":"+String(P1.mealtime(2))+"\n");
+        Moniter.print("stand:"+String(P1.get_Room())+":"+P1.get_Code()+":\n");
         ck2 = true;
       }
     } else if (ck2 == false) {
       P2.set_Status(false);
     }
-
-    /*
-    //대기 함수 종료 테스트 위한 if문
-    //3초 대기후 ck1,ck2를 true로 바꿔 함수 종료 유도
-    if((millis() - Start_Wait_t) > 3000 ){
-      ck1 = true;
-      ck2 = true;
-    }*/
 
   }
 }

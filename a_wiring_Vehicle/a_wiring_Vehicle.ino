@@ -107,7 +107,6 @@ void loop() {
     if (keyPressed != NO_KEY) {
 
       lcd.backlight();
-      Wake_up();
       room = room_input();
 
       if(room > 0){
@@ -135,7 +134,6 @@ void loop() {
       char n = ras_ros.read();
       if(n == '%'){
         lcd.backlight();
-        Wake_up();        
         reset_serialbuff();
         lcd.clear();
         Wake_status = true;
@@ -178,3 +176,4 @@ void loop() {
     }
   }
 }
+

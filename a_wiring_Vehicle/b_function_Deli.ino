@@ -23,9 +23,8 @@ int Delivery(String deli_cmd, int len){
 
   //환자 코드 및 리얼 타임 추출
   P_num = deli_cmd.indexOf(":", Sp_num + 1);
-  T_num = deli_cmd.indexOf(":", P_num + 1);
   code = deli_cmd.substring(Sp_num + 1, P_num);
-  Rt = deli_cmd.substring(P_num + 1, T_num).toInt();
+
 
   //환자 1 배달
   if (P1.get_Code().equals(code)) {
@@ -36,7 +35,7 @@ int Delivery(String deli_cmd, int len){
 
     //다음 동작을 하란 신호
     ras_ros.print("OK");
-    
+
   }
 
   //적재 공간 2 세팅
@@ -93,9 +92,8 @@ void feeding_Stand(space p){
       
       //식판을 꺼내고 3초간 유지해야 식판을 꺼낸것으로 인식
       if( (millis() - check) > 3000) {
-        p.set_St(millis());
 
-        Moniter.print("delivery:"+String(p.get_Room())+":"+String(p.get_Code())+":"+String(p.mealtime(1))+"\n");
+        Moniter.print("delivery:"+String(p.get_Room())+":"+String(p.get_Code())+":\n");
         
         break;
       }
