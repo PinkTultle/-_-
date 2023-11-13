@@ -135,7 +135,7 @@ void loop() {
     //시리얼 입력을 통해 WakeUp
     //이 경우 input_Room 시퀴스를 건너뛰고 바로 동작 상태로 전환
     if(Moniter.available() || ras_ros.available()){
-      String n = Moniter.readString();
+      String n = ras_ros.readString();
       //String n = ras_ros.readString();
       if(n == "%"){
         lcd.backlight();
@@ -160,7 +160,9 @@ void loop() {
         cmd = ras_ros.readString();
       }
 
-      Moniter.println(cmd);
+
+      //디버깅용 시리얼 모니터 출력
+      //Moniter.println(cmd);
 
       cmd_len = cmd.length();
       func_num = cmd.indexOf(":");

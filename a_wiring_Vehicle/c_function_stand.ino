@@ -24,6 +24,8 @@ int Stand() {
       if (P1.get_Status() == false) R1_time = millis();
 
       LCD_print_S("sen1:"+String(FSR_Value1), 4, 0); 
+
+      //디버깅용 시리얼 모니터 출력
       Moniter.println("FSR_Value1 : "+ String(FSR_Value1));///////////
         
       P1.set_Status(true);
@@ -49,6 +51,8 @@ int Stand() {
       if (P2.get_Status() == false) R2_time = millis();
 
       LCD_print_S("sen2:"+String(FSR_Value2), 4, 1); 
+
+      //디버깅용 시리얼 모니터 출력
       Moniter.println("FSR_Value2 : "+ String(FSR_Value2));////////////
 
       P2.set_Status(true);

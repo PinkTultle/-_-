@@ -79,6 +79,8 @@ void feeding_Stand(space *p){
     
     var = analogRead(sensor);     // 센서값을 아나로그로 읽어 value 변수에 저장
     LCD_print_S(String(var), 4, 0);
+
+    //디버깅용 시리얼 모니터 출력
     Moniter.println("var : "+ String(var));
 
     Wait = millis() - Now;
