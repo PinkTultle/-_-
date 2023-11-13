@@ -171,10 +171,10 @@ void loop() {
       if (func_cmd == "load") {
         //적재 함수 호출
         Load(cmd.substring(func_num + 1, cmd_len), func_cmd.length());
-      } else if (func_cmd == "del") {
+      } else if (func_cmd == "delivery") {
         //배달 함수 호출
         Delivery(cmd.substring(func_num + 1, cmd_len), func_cmd.length());
-      } else if (func_cmd == "sta") {
+      } else if (func_cmd == "stand") {
         //대기 함수 호출
         Stand();
       }else if (func_cmd == "sleep"){

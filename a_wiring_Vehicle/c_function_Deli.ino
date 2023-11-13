@@ -68,20 +68,30 @@ int Delivery(String deli_cmd, int len){
 void feeding_Stand(space *p){
 
   lcd.clear();
+
+  LCD_print_S("press var:", 1, 0);
+  LCD_print_S("code: ", 3, 1);
   
   unsigned long Now = millis(), Wait = 0, check = 0;
   int var, sensor;
 
-  if((*p).get_Room() == 1) sensor = FSRsensor1;
-  if((*p).get_Room() == 2) sensor = FSRsensor2;
+  if((*p).get_Room() == 1) {
+    sensor = FSRsensor1;
+  }
+  if((*p).get_Room() == 2) {
+    sensor = FSRsensor2;
+  }
   
+  LCD_print_S(String((*p).get_Code()), 10, 1);
+
+
   while(1){
     
     var = analogRead(sensor);     // 센서값을 아나로그로 읽어 value 변수에 저장
-    LCD_print_S(String(var), 4, 0);
+    LCD_print_S(String(var), 12, 0);
 
     //디버깅용 시리얼 모니터 출력
-    Moniter.println("var : "+ String(var));
+    //Moniter.println("var : "+ String(var));
 
     Wait = millis() - Now;
 
