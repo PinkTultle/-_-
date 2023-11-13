@@ -28,6 +28,8 @@ int Delivery(String deli_cmd, int len){
   //환자 1 배달
   if (P1.get_Code().equals(code)) {
 
+    LCD_print_S("One delivery!", 1, 1);
+
     //압력센서 동작 및 LED ON / 기다리는 함수 호출
     digitalWrite(Led1, HIGH);
     feeding_Stand(&P1);
@@ -35,11 +37,13 @@ int Delivery(String deli_cmd, int len){
     //다음 동작을 하란 신호
     ras_ros.print("OK");
 
+    lcd.clear();
   }
 
   //적재 공간 2 세팅
   else if (P2.get_Code().equals(code)) {
-    
+    LCD_print_S("Two delivery!", 1, 1);
+
     //압력센서 동작 및 LED ON / 기다리는 함수 호출
     digitalWrite(Led2, HIGH);
     feeding_Stand(&P2);
@@ -47,7 +51,7 @@ int Delivery(String deli_cmd, int len){
     //다음 동작을 하란 신호
     ras_ros.print("OK");
 
-
+    lcd.clear();
   } else {
     digitalWrite(err_Led, HIGH);
   }
@@ -62,6 +66,8 @@ int Delivery(String deli_cmd, int len){
 //환자가 식판을 받으면 1, 이니면 0 반환
 //이를 통해 환자
 void feeding_Stand(space *p){
+
+  lcd.clear();
   
   unsigned long Now = millis(), Wait = 0, check = 0;
   int var, sensor;
@@ -72,18 +78,20 @@ void feeding_Stand(space *p){
   while(1){
     
     var = analogRead(sensor);     // 센서값을 아나로그로 읽어 value 변수에 저장
+    LCD_print_S(String(var), 4, 0);
+    Moniter.println("var : "+ String(var));
+
     Wait = millis() - Now;
 
     //받지 않고 대기 시간이 지났을경우
     //현재 설정된 대기 시간 : 3분
-    if(var > 400 && Wait > Wait_ms){
+    if(var > 150 && Wait > Wait_ms){
       (*p).set_Status(true);
 
-      web.print("delivery:"+String((*p).get_Room())+":"+(*p).get_Code()+":NO\n");
+      web.print("del:"+String((*p).get_Room())+":"+(*p).get_Code()+":NO\n");
 
-      break;
     } //식판을 받았을 때
-    else if(var < 400){
+    else if(var < 150){
       if((*p).get_Status() == true){
         (*p).set_Status(false);
         check = millis();
@@ -92,12 +100,16 @@ void feeding_Stand(space *p){
       //식판을 꺼내고 3초간 유지해야 식판을 꺼낸것으로 인식
       if( (millis() - check) > 3000) {
 
-        web.print("delivery:"+String((*p).get_Room())+":"+String((*p).get_Code())+":\n");
+        web.print("del:"+String((*p).get_Room())+":"+String((*p).get_Code())+":\n");
         
         break;
       }
     }
+
+    delay(50);
   }
+
+  lcd.clear();
 }
 
 

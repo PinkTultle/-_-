@@ -36,7 +36,6 @@ void space::set_Space(String c, bool sta) {
 
 
 void space::init_space() {
-
   code.remove(code.length());
   status = false;
 }

@@ -30,16 +30,17 @@ void Load(String load_cmd, int len) {
   //적재 공간 1 세팅
   if (num == 1) {
     P1.set_Space(code, true);
+
+    LCD_print_S("One Load!", 2, 0);
     
   }
 
   //적재 공간 2 세팅
   else if (num == 2) {
+    LCD_print_S("Two Load!", 2, 1);
 
     P2.set_Space(code, true);
 
-  } else {
-      digitalWrite(err_Led, HIGH);
   }
 }
 

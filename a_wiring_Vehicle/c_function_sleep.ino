@@ -1,5 +1,10 @@
 void Sleep(){
 
+  lcd.clear();
+  LCD_print_S("Sleep Mode!", 2, 1);
+  delay(2000);
+
+  
   //대기모드 진입 전 버퍼 비우기
   reset_serialbuff();
 
@@ -11,7 +16,6 @@ void Sleep(){
 
   P1.init_space();
   P2.init_space();
-  
 
 }
 

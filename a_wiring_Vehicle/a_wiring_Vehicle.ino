@@ -19,14 +19,17 @@ HardwareSerial& ras_ros = Serial2;
 const byte ROWS = 4;  // 행(rows) 개수
 const byte COLS = 4;  // 열(columns) 개수
 char keys[ROWS][COLS] = {
-  { '1', '2', '3', 'A' },
-  { '4', '5', '6', 'B' },
-  { '7', '8', '9', 'C' },
-  { '*', '0', '#', 'D' }
+  { '*', '7', '4', '1' },
+  { '0', '8', '5', '2' },
+  { '#', '9', '6', '3' },
+  { 'D', 'C', 'B', 'A' }
 };
 
-byte rowPins[ROWS] = { 52, 50, 48, 46 };  // R1, R2, R3, R4 단자가 연결된 아두이노 핀 번호
-byte colPins[COLS] = { 53, 51, 49, 47 };  // C1, C2, C3, C4 단자가 연결된 아두이노 핀 번호
+//byte rowPins[ROWS] = { 45, 43, 41, 39 };  // R1, R2, R3, R4 단자가 연결된 아두이노 핀 번호
+//byte colPins[COLS] = { 47, 49, 51, 53 };  // C1, C2, C3, C4 단자가 연결된 아두이노 핀 번호
+
+byte rowPins[ROWS] = { 45, 43, 41, 39 };  // R1, R2, R3, R4 단자가 연결된 아두이노 핀 번호
+byte colPins[COLS] = { 47, 49, 51, 53 };  // C1, C2, C3, C4 단자가 연결된 아두이노 핀 번호
 
 Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);
 
@@ -131,17 +134,21 @@ void loop() {
 
     //시리얼 입력을 통해 WakeUp
     //이 경우 input_Room 시퀴스를 건너뛰고 바로 동작 상태로 전환
-    if(ras_ros.available()){
-      String n = ras_ros.readString();
+    if(Moniter.available() || ras_ros.available()){
+      String n = Moniter.readString();
+      //String n = ras_ros.readString();
       if(n == "%"){
         lcd.backlight();
         reset_serialbuff();
         lcd.clear();
         Wake_status = true;
+        lcd.setCursor(4, 0);
+        lcd.print("standby!");
       }
     }
 
   } else {
+
 
     if (Moniter.available() || web.available() || ras_ros.available()) {
 
@@ -153,6 +160,8 @@ void loop() {
         cmd = ras_ros.readString();
       }
 
+      Moniter.println(cmd);
+
       cmd_len = cmd.length();
       func_num = cmd.indexOf(":");
       func_cmd = cmd.substring(0, func_num);
@@ -160,21 +169,19 @@ void loop() {
       if (func_cmd == "load") {
         //적재 함수 호출
         Load(cmd.substring(func_num + 1, cmd_len), func_cmd.length());
-      } else if (func_cmd == "delivery") {
+      } else if (func_cmd == "del") {
         //배달 함수 호출
         Delivery(cmd.substring(func_num + 1, cmd_len), func_cmd.length());
-      } else if (func_cmd == "stand") {
+      } else if (func_cmd == "sta") {
         //대기 함수 호출
         Stand();
       }else if (func_cmd == "sleep"){
         Sleep();
         //슬립모드 돌입 알리기
       }
-      else {
-        digitalWrite(err_Led, HIGH);
-      }
       cmd.remove(cmd.length());
     }
   }
+  delay(50);
 }
 

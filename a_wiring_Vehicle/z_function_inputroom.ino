@@ -36,6 +36,7 @@ int room_input(){
         if(Check(room_num)){
           reset_input();
           LCD_print_S("ERROR!!", 4, 1);
+          index = 0;
           continue;
         }
 
@@ -77,6 +78,7 @@ int room_input(){
 
       index = (index == 2)? 0 : index+1;
     }  
+    delay(50);
   }
 }
 
