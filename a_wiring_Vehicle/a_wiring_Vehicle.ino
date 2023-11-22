@@ -182,6 +182,7 @@ void loop() {
         //슬립모드 돌입 알리기
       }
       cmd.remove(cmd.length());
+
     }
   }
   delay(50);

@@ -28,7 +28,8 @@ int Delivery(String deli_cmd, int len){
   //환자 1 배달
   if (P1.get_Code().equals(code)) {
 
-    LCD_print_S("One delivery!", 1, 1);
+    LCD_print_S("One delivery!", 1, 0);
+    delay(2000);
 
     //압력센서 동작 및 LED ON / 기다리는 함수 호출
     digitalWrite(Led1, HIGH);
@@ -42,7 +43,8 @@ int Delivery(String deli_cmd, int len){
 
   //적재 공간 2 세팅
   else if (P2.get_Code().equals(code)) {
-    LCD_print_S("Two delivery!", 1, 1);
+    LCD_print_S("Two delivery!", 1, 0);
+    delay(2000);
 
     //압력센서 동작 및 LED ON / 기다리는 함수 호출
     digitalWrite(Led2, HIGH);
@@ -73,13 +75,16 @@ void feeding_Stand(space *p){
   LCD_print_S("code: ", 3, 1);
   
   unsigned long Now = millis(), Wait = 0, check = 0;
-  int var, sensor;
+  int var, sensor, room;
+  bool sta = false;
 
   if((*p).get_Room() == 1) {
     sensor = FSRsensor1;
+    room = 1;
   }
   if((*p).get_Room() == 2) {
     sensor = FSRsensor2;
+    room = 2;
   }
   
   LCD_print_S(String((*p).get_Code()), 10, 1);
@@ -89,7 +94,6 @@ void feeding_Stand(space *p){
     
     var = analogRead(sensor);     // 센서값을 아나로그로 읽어 value 변수에 저장
     LCD_print_S(String(var), 12, 0);
-
     //디버깅용 시리얼 모니터 출력
     //Moniter.println("var : "+ String(var));
 
@@ -97,28 +101,29 @@ void feeding_Stand(space *p){
 
     //받지 않고 대기 시간이 지났을경우
     //현재 설정된 대기 시간 : 3분
-    if(var > 150 && Wait > Wait_ms){
+    if(sta == false && (var > 200 && Wait > Wait_ms)){
       (*p).set_Status(true);
 
-      web.print("del:"+String((*p).get_Room())+":"+(*p).get_Code()+":NO\n");
+      web.print("del:"+String(room)+":"+(*p).get_Code()+":NO\n");
+      break;
 
     } //식판을 받았을 때
-    else if(var < 150){
+    else if( var < 200){
       if((*p).get_Status() == true){
         (*p).set_Status(false);
         check = millis();
       }
       
-      //식판을 꺼내고 3초간 유지해야 식판을 꺼낸것으로 인식
-      if( (millis() - check) > 3000) {
-
-        web.print("del:"+String((*p).get_Room())+":"+String((*p).get_Code())+":\n");
-        
+      //식판을 꺼내고 5초간 유지해야 식판을 꺼낸것으로 인식
+      if( (millis() - check) > 5000) {
+        web.print("deli:" + String(room) + ":" + String((*p).get_Code()) + ":\n");
+        sta = true;
         break;
       }
+      delay(30);
     }
 
-    delay(50);
+    delay(20);
   }
 
   lcd.clear();
