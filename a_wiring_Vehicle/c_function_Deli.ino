@@ -120,7 +120,7 @@ void feeding_Stand(space *p){
         sta = true;
         break;
       }
-      delay(30);
+      delay(40);
     }
 
     delay(20);
